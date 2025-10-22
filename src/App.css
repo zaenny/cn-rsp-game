@@ -12,6 +12,18 @@ body {
   text-align: center;
 }
 
+.WIN {
+  border: 10px solid blue 
+}
+
+.LOSE {
+  border: 10px solid red
+}
+
+.TIE {
+  border: 10px solid orange
+}
+
 .item-img{
   width: 500px;
   height: 400px;
