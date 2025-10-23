@@ -19,20 +19,46 @@ const choice = {
 
 function App() {
   const [userSelect, setUserSelect] = useState(null);
+  const [computerSelect, setComputerSelect] = useState(null);
+  const [result, setResult] = useState("");
   
   const play = (userChoice) => {
-    setUserSelect(choice[userChoice]);  
+    setUserSelect(choice[userChoice]);
+    let computerChoice = randomChoice();
+    setComputerSelect(computerChoice);
+    setResult(judgement(choice[userChoice], computerChoice));
+  }
+
+  const judgement = (user, computer) => {
+    
+    if (user.name == computer.name){
+      return "TIE";
+    }else if(user.name == "Rock"){ 
+      return computer.name == "Scissors" ? "WIN" : "LOSE" 
+    }else if(user.name == "Scissors"){
+      return computer.name == "Paper" ? "WIN" : "LOSE"
+    }else if(user.name == "Paper"){
+      return computer.name == "Rock" ? "WIN" : "LOSE"
+    }
+    
+  }
+
+  const randomChoice = () => { 
+    let itemArray = Object.keys(choice);
+    let randomItem = Math.floor(Math.random() * itemArray.length);
+    let final = itemArray[randomItem];
+
+    return choice[final];
   }
 
   return (
     <> 
-      {/* //박스 2개 타이틀, 사진, 결과 */}
       <div className='main'>
         <h1>✌🏻✊🏻✋🏻 가위 바위 보</h1>
       </div>
       <div className='main'>
-        <Box title='You' item={userSelect}/>
-        <Box title='Computer'/>
+        <Box title='You' item={userSelect} result={result}/>
+        <Box title='Computer' item={computerSelect} result={result}/>
       </div>
       {/* // 가위바위보 버튼  */}
       <div className='main'>
@@ -40,10 +66,6 @@ function App() {
         <button onClick={() => play("rock")}>바위</button>
         <button onClick={() => play("paper")}>보</button>
       </div>
-      {/* // 버튼을 클릭하면 클릭한 값이 박스에 보임
-      // 컴퓨터는 랜덤하게 선택이된다
-      // 결과를 가지고 누가 이겼는지 승패를 따진다
-      // 승패결과에 따라 테두리 색 변경 - 이기면 초록, 지면 빨강, 비기면 검은색  */}
     </>
   )
 }
